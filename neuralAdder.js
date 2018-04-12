@@ -59,6 +59,12 @@ class Neuron {
 		return this.sigmoid(n);
 	}
 
+	fire(val) {
+		//console.log(this.connections.length);
+		for (let c in this.connections) {
+			this.connections[c].feedForward(val);
+		}
+	}
 
 	feedForward(input) {
 		this.sum = 0;
@@ -73,13 +79,15 @@ class Neuron {
 		for (let i in input) {
 			this.sum += input[i] * this.weights[i];
 		}
-		return this.activation(this.sum);
+		//console.log(this.sum);
+		//console.log(this.weights);
+		this.fire(this.activation(this.sum));
 	}
 
 
 	sigmoid(t) {
     	return 1/(1+Math.pow(Math.E, -t));
-    	// return t;
+    	//return t;
 	}
 }
 
@@ -89,6 +97,9 @@ class Connection {
 		this.from = from;
 		this.to = to;
 		this.weight = w;
+	}
+	feedForward(val) {
+		this.to.feedForward(val * this.weight);
 	}
 }
 
@@ -117,27 +128,27 @@ class Network {
 
 
 
-let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-let trainers = [];
+// let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+// let trainers = [];
 
-for (let i in numWords) {
-	// console.log(wordToNums(numWords[i]));
-	trainers.push(new Trainer(wordToNums(numWords[i]), i));
-}
-
-
-let n = new Neuron(5, .4);
+// for (let i in numWords) {
+// 	// console.log(wordToNums(numWords[i]));
+// 	trainers.push(new Trainer(wordToNums(numWords[i]), i));
+// }
 
 
-for (let i in trainers) {
-	// console.log(trainers[i].inputs);
-	// console.log(trainers[i].answer);
-	n.train(trainers[i].inputs, trainers[i].answer);
-	// console.log(numWords[i]);
-	// console.log(n.feedForward(trainers[i].inputs));
-}
+// let n = new Neuron(5, .4);
 
-// console.log(n.feedForward(wordToNums('three')));
+
+// for (let i in trainers) {
+// 	// console.log(trainers[i].inputs);
+// 	// console.log(trainers[i].answer);
+// 	n.train(trainers[i].inputs, trainers[i].answer);
+// 	// console.log(numWords[i]);
+// 	// console.log(n.feedForward(trainers[i].inputs));
+// }
+
+// // console.log(n.feedForward(wordToNums('three')));
 
 
 
@@ -164,7 +175,7 @@ network.addLayer(layer3);
 
 
 
-for (let d = 0; d < network.layers.length - 1; d++) {
+for (let d = 0; d < network.layers.length-1; d++) {
 	let layer = network.layers[d];
 	for (let k in layer.neurons) {
 		let tempN = layer.neurons[k];
@@ -174,12 +185,14 @@ for (let d = 0; d < network.layers.length - 1; d++) {
 	}
 }
 
-let two = [20,23,15]
+let two = [20,23,15,0,0];
 
 for (let n in layer1.neurons) {
-	console.log(layer1.neurons[n].feedForward(two[n]));
+	layer1.neurons[n].feedForward(two[n]);
 }
 
+let output = layer3.neurons[0];
+console.log(output);
 
 
 

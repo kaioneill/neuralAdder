@@ -1,11 +1,17 @@
 
 
-// turn spelling of number into alphabet values, add number to end of array
+// turn spelling of number into alphabet values, pad with 0
 function wordToNums(s) {
 	let nums = [];
-	for (let ch in s) {
-		nums.push(s.charCodeAt(ch) - 96);
+	let i = 0;
+	for (i in s) {
+		nums.push(s.charCodeAt(i) - 96);
 	}
+
+	for (; i < 4; i++) {
+		nums.push(0);
+	}
+	// console.log(nums);
 	return nums;
 }
 
@@ -21,19 +27,6 @@ class Trainer {
 
 
 }
-
-let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-let trainers = [];
-
-for (let i in numWords) {
-	trainers.push(new Trainer(wordToNums(numWords[i])));
-}
-
-console.log(trainers);
-
-
-
-
 
 
 
@@ -52,10 +45,10 @@ class Neuron {
 
 	train(input, goal) {
 		let guess = this.feedForward(input);
-		let error = desired - guess;
+		let error = goal - guess;
 
 		for (let i in this.weights) {
-			weights[i] += this.learnRate * error * input[i];
+			this.weights[i] += this.learnRate * error * input[i];
 		}
 	}
 
@@ -86,4 +79,30 @@ class Neuron {
     	return t;
 	}
 }
+
+
+
+
+
+
+let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+let trainers = [];
+
+for (let i in numWords) {
+	trainers.push(new Trainer(wordToNums(numWords[i])));
+}
+
+
+let n = new Neuron([1,1,1,1,1], 3);
+
+
+for (let i in trainers) {
+	n.train(trainers[i].inputs, trainers[i].answer);
+	console.log(n.feedForward(i.inputs));
+}
+
+
+
+
+
 

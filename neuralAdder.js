@@ -1,10 +1,10 @@
 class Neuron {
 
 
-	constructor() {
+	constructor(n) {
 		this.weights = [];
 
-		for (let i in this.ins) {
+		for (let i = 0; i < n.length; i++) {
 			this.weights.push(Math.random());
 		}
 	}
@@ -14,12 +14,12 @@ class Neuron {
 	}
 
 
-	guess(ins) {
+	feedForward(ins) {
 		this.sum = 0;
 		for (let i = 0; i < ins.length; i++) {
 			this.sum += ins[i] * this.weights[i];
 		}
-		return this.sum;
+		return this.activation(this.sum);
 	}
 
 
@@ -29,8 +29,7 @@ class Neuron {
 }
 
 
-
-n = new Neuron();
-inputs = [3,2,0.5];
+inputs = [3,0,1];
+n = new Neuron(inputs);
 
 console.log(n.guess(inputs));

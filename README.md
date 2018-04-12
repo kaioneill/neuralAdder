@@ -1,0 +1,1 @@
+an attempt to write a very basic neural network. when finished, it will hopefully be able to do something involving mapping written numbers (two) to their numeric form (2). has the pontential to be a total failure.

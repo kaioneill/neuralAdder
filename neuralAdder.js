@@ -1,11 +1,22 @@
 class Neuron {
 
 
-	constructor(n) {
+	constructor(input, learnRate) {
 		this.weights = [];
+		this.learnRate = learnRate
 
-		for (let i = 0; i < n.length; i++) {
+		for (let i in input) {
 			this.weights.push(Math.random());
+		}
+	}
+
+
+	train(input, goal) {
+		let guess = this.feedForward(input);
+		let error = desired - guess;
+
+		for (let i in this.weights) {
+			weights[i] += this.learnRate * error * input[i];
 		}
 	}
 
@@ -14,22 +25,32 @@ class Neuron {
 	}
 
 
-	feedForward(ins) {
+	feedForward(input) {
 		this.sum = 0;
-		for (let i = 0; i < ins.length; i++) {
-			this.sum += ins[i] * this.weights[i];
+		
+		// normalize
+		// let ratio = 1 / Math.max.apply(Math, input);
+
+		// for (let i in input) {
+		// 	input[i] = input[i] * ratio;
+		// }
+
+		for (let i in input) {
+			this.sum += input[i] * this.weights[i];
 		}
 		return this.activation(this.sum);
 	}
 
 
 	sigmoid(t) {
-    	return 1/(1+Math.pow(Math.E, -t));
+    	//return 1/(1+Math.pow(Math.E, -t));
+    	return t;
 	}
 }
 
 
-inputs = [3,0,1];
-n = new Neuron(inputs);
+input = [20,23,15];
+input2 = [3,10,20];
+n = new Neuron(input2);
 
-console.log(n.guess(inputs));
+console.log(n.feedForward(input2));

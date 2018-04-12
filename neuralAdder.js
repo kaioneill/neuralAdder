@@ -43,7 +43,6 @@ class Neuron {
 	train(input, goal) {
 		let guess = this.feedForward(input);
 		let error = goal - guess;
-
 		for (let i in this.weights) {
 			this.weights[i] += this.learnRate * error * input[i];
 		}
@@ -58,11 +57,11 @@ class Neuron {
 		this.sum = 0;
 		
 		// normalize
-		// let ratio = 1 / Math.max.apply(Math, input);
+		let ratio = 1 / Math.max.apply(Math, input);
 
-		// for (let i in input) {
-		// 	input[i] = input[i] * ratio;
-		// }
+		for (let i in input) {
+			input[i] = input[i] * ratio;
+		}
 
 		for (let i in input) {
 			this.sum += input[i] * this.weights[i];
@@ -95,10 +94,10 @@ let n = new Neuron([1,1,1,1,1], .4);
 
 
 for (let i in trainers) {
-	console.log(trainers[i].inputs);
-	console.log(trainers[i].answer);
+	// console.log(trainers[i].inputs);
+	// console.log(trainers[i].answer);
 	n.train(trainers[i].inputs, trainers[i].answer);
-	console.log(n.feedForward(i.inputs));
+	console.log(n.feedForward(trainers[i].inputs));
 }
 
 

@@ -1,3 +1,35 @@
+let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
+
+
+// turn spelling of number into alphabet values, add number to end of array
+function wordToNums(s) {
+	let nums = [];
+	for (let ch in s) {
+		nums.push(s.charCodeAt(ch) - 96);
+	}
+	return nums;
+}
+
+
+class Trainer {
+	constructor(word, num) {
+		this.inputs = [];
+		this.answer = num;
+		for (i in word) {
+			this.inputs.push(i);
+		}
+	}
+
+
+}
+
+let t = new Trainer();
+
+
+
+
+
 class Neuron {
 
 
@@ -48,9 +80,3 @@ class Neuron {
 	}
 }
 
-
-input = [20,23,15];
-input2 = [3,10,20];
-n = new Neuron(input2);
-
-console.log(n.feedForward(input2));

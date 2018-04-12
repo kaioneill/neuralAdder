@@ -61,6 +61,7 @@ class Neuron {
 
 	fire(val) {
 		//console.log(this.connections.length);
+		if(this.connections.length == 0) this.sum = val;
 		for (let c in this.connections) {
 			this.connections[c].feedForward(val);
 		}
@@ -69,16 +70,16 @@ class Neuron {
 	feedForward(input) {
 		this.sum = 0;
 		
-		// normalize
+		//normalize
 		// let ratio = 1 / Math.max.apply(Math, input);
 
 		// for (let i in input) {
 		// 	input[i] = input[i] * ratio;
 		// }
 
-		for (let i in input) {
-			this.sum += input[i] * this.weights[i];
-		}
+		// for (let i in input) {
+		// 	this.sum += input[i] * this.weights[i];
+		// }
 		//console.log(this.sum);
 		//console.log(this.weights);
 		this.fire(this.activation(this.sum));
@@ -128,28 +129,6 @@ class Network {
 
 
 
-// let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-// let trainers = [];
-
-// for (let i in numWords) {
-// 	// console.log(wordToNums(numWords[i]));
-// 	trainers.push(new Trainer(wordToNums(numWords[i]), i));
-// }
-
-
-// let n = new Neuron(5, .4);
-
-
-// for (let i in trainers) {
-// 	// console.log(trainers[i].inputs);
-// 	// console.log(trainers[i].answer);
-// 	n.train(trainers[i].inputs, trainers[i].answer);
-// 	// console.log(numWords[i]);
-// 	// console.log(n.feedForward(trainers[i].inputs));
-// }
-
-// // console.log(n.feedForward(wordToNums('three')));
-
 
 
 
@@ -192,8 +171,32 @@ for (let n in layer1.neurons) {
 }
 
 let output = layer3.neurons[0];
-console.log(output);
+console.log(output.sum);
 
+
+
+
+// let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+// let trainers = [];
+
+// for (let i in numWords) {
+// 	// console.log(wordToNums(numWords[i]));
+// 	trainers.push(new Trainer(wordToNums(numWords[i]), i));
+// }
+
+
+// let n = new Neuron(5, .4);
+
+
+// for (let i in trainers) {
+// 	// console.log(trainers[i].inputs);
+// 	// console.log(trainers[i].answer);
+// 	n.train(trainers[i].inputs, trainers[i].answer);
+// 	// console.log(numWords[i]);
+// 	// console.log(n.feedForward(trainers[i].inputs));
+// }
+
+// // console.log(n.feedForward(wordToNums('three')));
 
 
 

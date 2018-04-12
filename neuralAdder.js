@@ -1,5 +1,7 @@
 
 
+let allWeights = [];
+
 // turn spelling of number into alphabet values, pad with 0
 function wordToNums(s) {
 	let nums = [];
@@ -76,12 +78,11 @@ class Neuron {
 		// for (let i in input) {
 		// 	input[i] = input[i] * ratio;
 		// }
-
-		// for (let i in input) {
-		// 	this.sum += input[i] * this.weights[i];
-		// }
+		for (let i in input) {
+			this.sum += input[i] * this.weights[i];
+		}
 		//console.log(this.sum);
-		//console.log(this.weights);
+		allWeights.push(this.activation(this.sum));
 		this.fire(this.activation(this.sum));
 	}
 
@@ -89,6 +90,9 @@ class Neuron {
 	sigmoid(t) {
     	return 1/(1+Math.pow(Math.E, -t));
     	//return t;
+	}
+	sigmoidDer(t) {
+        return t * (1 - t);
 	}
 }
 
@@ -100,7 +104,7 @@ class Connection {
 		this.weight = w;
 	}
 	feedForward(val) {
-		this.to.feedForward(val * this.weight);
+		this.to.feedForward([val * this.weight]);
 	}
 }
 
@@ -167,7 +171,7 @@ for (let d = 0; d < network.layers.length-1; d++) {
 let two = [20,23,15,0,0];
 
 for (let n in layer1.neurons) {
-	layer1.neurons[n].feedForward(two[n]);
+	layer1.neurons[n].feedForward([two[n]]);
 }
 
 let output = layer3.neurons[0];

@@ -97,6 +97,7 @@ for (let i in trainers) {
 	// console.log(trainers[i].inputs);
 	// console.log(trainers[i].answer);
 	n.train(trainers[i].inputs, trainers[i].answer);
+	console.log(numWords[i]);
 	console.log(n.feedForward(trainers[i].inputs));
 }
 

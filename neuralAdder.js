@@ -1,5 +1,3 @@
-let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-
 
 
 // turn spelling of number into alphabet values, add number to end of array
@@ -16,7 +14,7 @@ class Trainer {
 	constructor(word, num) {
 		this.inputs = [];
 		this.answer = num;
-		for (i in word) {
+		for (let i in word) {
 			this.inputs.push(i);
 		}
 	}
@@ -24,7 +22,16 @@ class Trainer {
 
 }
 
-let t = new Trainer();
+let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+let trainers = [];
+
+for (let i in numWords) {
+	trainers.push(new Trainer(wordToNums(numWords[i])));
+}
+
+console.log(trainers);
+
+
 
 
 

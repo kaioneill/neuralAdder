@@ -1,8 +1,7 @@
-class neuron {
+class Neuron {
 
 
-	constructor(ins) {
-		this.ins = ins;
+	constructor() {
 		this.weights = [];
 
 		for (let i in this.ins) {
@@ -10,15 +9,17 @@ class neuron {
 		}
 	}
 
-	activation() {
-		this.ins;
-		this.result = 0;
+	activation(n) {
+		return this.sigmoid(n);
+	}
 
-		for (let i = 0; i < this.ins.length; i++) {
-			this.result += this.sigmoid(this.ins[i]) * this.weights[i];
+
+	guess(ins) {
+		this.sum = 0;
+		for (let i = 0; i < ins.length; i++) {
+			this.sum += ins[i] * this.weights[i];
 		}
-
-		return this.result;
+		return this.sum;
 	}
 
 
@@ -29,6 +30,7 @@ class neuron {
 
 
 
-n = new neuron([1,2,3]);
+n = new Neuron();
+inputs = [3,2,0.5];
 
-console.log(n.activation());
+console.log(n.guess(inputs));

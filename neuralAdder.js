@@ -18,11 +18,8 @@ function wordToNums(s) {
 
 class Trainer {
 	constructor(word, num) {
-		this.inputs = [];
+		this.inputs = word;
 		this.answer = num;
-		for (let i in word) {
-			this.inputs.push(i);
-		}
 	}
 
 
@@ -89,14 +86,17 @@ let numWords = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', '
 let trainers = [];
 
 for (let i in numWords) {
-	trainers.push(new Trainer(wordToNums(numWords[i])));
+	// console.log(wordToNums(numWords[i]));
+	trainers.push(new Trainer(wordToNums(numWords[i]), i));
 }
 
 
-let n = new Neuron([1,1,1,1,1], 3);
+let n = new Neuron([1,1,1,1,1], .4);
 
 
 for (let i in trainers) {
+	console.log(trainers[i].inputs);
+	console.log(trainers[i].answer);
 	n.train(trainers[i].inputs, trainers[i].answer);
 	console.log(n.feedForward(i.inputs));
 }

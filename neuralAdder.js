@@ -30,11 +30,11 @@ class Trainer {
 class Neuron {
 
 
-	constructor(input, learnRate) {
+	constructor(n, learnRate) {
 		this.weights = [];
 		this.learnRate = learnRate
 
-		for (let i in input) {
+		for (let i = 0; i < n; i++) {
 			this.weights.push(Math.random());
 		}
 	}
@@ -90,7 +90,7 @@ for (let i in numWords) {
 }
 
 
-let n = new Neuron([1,1,1,1,1], .4);
+let n = new Neuron(5, .4);
 
 
 for (let i in trainers) {

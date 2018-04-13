@@ -88,12 +88,10 @@ class Neuron {
 
 
 	sigmoid(t) {
-    	return 1/(1+Math.pow(Math.E, -t));
+		return 1/(1+Math.pow(Math.E, -t));
     	//return t;
-	}
-	sigmoidDer(t) {
-        return t * (1 - t);
-	}
+    }
+
 }
 
 
@@ -131,7 +129,9 @@ class Network {
 }
 
 
-
+function sigmoidDer(t) {
+	return t * (1 - t);
+}
 
 
 
@@ -170,12 +170,74 @@ for (let d = 0; d < network.layers.length-1; d++) {
 
 let two = [20,23,15,0,0];
 
-for (let n in layer1.neurons) {
-	layer1.neurons[n].feedForward([two[n]]);
+
+
+
+let output;
+
+function train(input, lRate) {
+	for (let n in layer1.neurons) {
+		layer1.neurons[n].feedForward([input[n]]);
+	}
+
+	output = layer3.neurons[0].sum;
+	let error = 2 - output;
+
+	// console.log(allWeights);
+	// console.log(output);
+	let slopeOutput = sigmoidDer(output);
+
+
+	let hiddenInput = [];
+
+	let hiddenActivations = [];
+
+	for (let i = allWeights.length; i < allWeights.length; i++) {
+		if(i < 5) hiddenInput[0].push(allWeights[i]);
+		else if(i < 25) hiddenInput.push(allWeights[i]);
+		else if(i < 34) hiddenActivations.push(allWeights[i]);
+	}
+
+
+	let slopeHidden = [];
+
+	for (let i in hiddenInput) {
+		slopeHidden.push(sigmoidDer(hiddenInput[i]));
+	}
+
+	let dOutput = error * slopeOutput;
+
+
+	let errorHidden = dOutput * output;
+
+	let dHidden = [];
+
+
+
+	for (let i in slopeHidden) {
+		dHidden.push(errorHidden * slopeHidden[i]);
+	}
+
+	for (let n in layer3.neurons) {
+		layer3.neurons[n].weights = layer3.neurons[n].weights + hiddenActivations[n] * lRate;
+	}
+
+	for (let n in layer1.neurons) {
+		layer1.neurons[n].weights = layer1.neurons[n].weights + dHidden[n] * lRate;
+	}
+ 
+
 }
 
-let output = layer3.neurons[0];
-console.log(output.sum);
+
+for (let i = 0; i < 2000; i++) {
+
+	train(two, 0.1);
+}
+
+
+console.log(output);
+
 
 
 
